@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSignup } from "../../hooks/useSignup";
 import "./SignupForm.css";
 
 const SignupForm = () => {
@@ -6,13 +7,11 @@ const SignupForm = () => {
   const [password, setPassword] = useState<string>("");
   const [displayName, setDisplayName] = useState<string>("");
 
+  const { signup, loading, error } = useSignup();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Form submitted");
-
-    console.log("email: ", email);
-    console.log("password: ", password);
-    console.log("displayName: ", displayName);
+    signup(displayName, email, password);
   };
 
   return (
@@ -44,9 +43,17 @@ const SignupForm = () => {
         />
       </label>
 
-      <button className="btn" type="submit">
-        Signup
-      </button>
+      {!loading ? (
+        <button className="btn" type="submit">
+          Signup
+        </button>
+      ) : (
+        <button className="btn" type="submit" disabled>
+          loading
+        </button>
+      )}
+
+      {error && <p>{error}</p>}
     </form>
   );
 };
