@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { projectAuth } from "../firebase/config";
+import { useAppDispatch } from "./hooks";
+import { signupUser } from "../redux/userSlice";
 
 export const useSignup = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
   const signup = async (
     displayName: string,
     email: string,
@@ -24,6 +27,9 @@ export const useSignup = () => {
       }
 
       await res.user.updateProfile({ displayName });
+
+      // dispatch signupUser action
+      dispatch(signupUser(res.user));
 
       setLoading(false);
     } catch (err: any) {
