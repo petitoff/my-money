@@ -19,4 +19,19 @@
   font-size: 1em;
   color: #777;
   width: 100%;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.bad-login input {
+  border: 1px solid red;
+}
+
+.bad-login button {
+  border-color: red;
+  color: red;
+}
+
+.bad-login button:hover {
+  border-color: green;
 }

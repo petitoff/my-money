@@ -6,16 +6,23 @@ import "./LoginForm.css";
 const LoginForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const { login } = useLogin();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password);
+    const response = await login(email, password);
+    if (response === undefined) {
+      setError(true);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-form">
+    <form
+      onSubmit={handleSubmit}
+      className={`login-form ${error && "bad-login"}`}
+    >
       <h2>Login</h2>
       <label>
         <span>email:</span>
