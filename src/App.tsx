@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SignupPage";
@@ -10,6 +10,7 @@ import { loginUser } from "./redux/userSlice";
 
 function App() {
   const user = useAppSelector((state) => state.user.user);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,9 +25,24 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/"
+            element={
+              !user.isLoggedIn ? <Navigate replace to="/login" /> : <HomePage />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              user.isLoggedIn ? <Navigate replace to="/" /> : <LoginPage />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              user.isLoggedIn ? <Navigate replace to="/" /> : <SignupPage />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
