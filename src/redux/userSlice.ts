@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import firebase from "firebase/app";
+import {
+  saveToLocalStorage,
+  clearLocalStorage,
+} from "../hooks/useSaveAndLoadLocalStorage";
 
 export interface UserState {
   user: {
@@ -29,12 +33,16 @@ export const userSlice = createSlice({
         isLoggedIn: false,
         firebaseData: null,
       };
+
+      clearLocalStorage();
     },
-    loginUser: (state, action: PayloadAction<any>) => {
+    loginUser: (state, action: PayloadAction<firebase.User>) => {
       state.user = {
         isLoggedIn: true,
         firebaseData: action.payload,
       };
+
+      saveToLocalStorage(state);
     },
   },
 });

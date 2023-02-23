@@ -15,6 +15,8 @@ export const useLogin = () => {
 
     try {
       const res = await projectAuth.signInWithEmailAndPassword(email, password);
+
+      if (res.user === null) throw new Error("User is null");
       dispatch(loginUser(res.user));
 
       setLoading(false);
