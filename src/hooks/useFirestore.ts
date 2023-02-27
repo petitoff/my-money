@@ -49,13 +49,8 @@ export const useFirestore = () => {
     const snapshot = await projectFirestore
       .collection(collection)
       .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
       .get();
-
-    // const transactions: Transactions[] = snapshot.docs
-    //   .filter((doc) => doc.data().userId === userId)
-    //   .map((doc) => {
-    //     return { ...doc.data(), id: doc.id };
-    //   });
 
     const transactions: Transaction[] = snapshot.docs.map((doc) => {
       return { ...doc.data(), id: doc.id };
