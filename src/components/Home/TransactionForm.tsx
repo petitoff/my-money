@@ -1,12 +1,23 @@
 import { useState } from "react";
+import { useFirestore } from "../../hooks/useFirestore";
 
 const TransactionForm = () => {
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const { addDoc } = useFirestore();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(name, amount);
+
+    const transaction = {
+      name,
+      amount: parseInt(amount),
+    };
+
+    setName("");
+    setAmount("");
+
+    await addDoc(transaction);
   };
 
   return (
