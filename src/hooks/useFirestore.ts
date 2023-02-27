@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { projectFirestore, timestamp } from "../firebase/config";
 import firebase from "firebase/app";
-import { Transactions } from "../redux/transactionSlice";
+import { Transaction } from "../redux/transactionSlice";
 import { addTransaction } from "../redux/transactionSlice";
 
 export interface DocProps {
@@ -46,13 +46,20 @@ export const useFirestore = () => {
     if (!user.firebaseData) return;
     const userId = user.firebaseData.uid;
 
-    const snapshot = await projectFirestore.collection(collection).get();
+    const snapshot = await projectFirestore
+      .collection(collection)
+      .where("userId", "==", userId)
+      .get();
 
-    const transactions: Transactions[] = snapshot.docs
-      .filter((doc) => doc.data().userId === userId)
-      .map((doc) => {
-        return { ...doc.data(), id: doc.id };
-      });
+    // const transactions: Transactions[] = snapshot.docs
+    //   .filter((doc) => doc.data().userId === userId)
+    //   .map((doc) => {
+    //     return { ...doc.data(), id: doc.id };
+    //   });
+
+    const transactions: Transaction[] = snapshot.docs.map((doc) => {
+      return { ...doc.data(), id: doc.id };
+    });
 
     return transactions;
   };

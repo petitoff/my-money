@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import firebase from "firebase/app";
 
-export interface Transactions {
+export interface Transaction {
   id?: string;
   name?: string;
   amount?: number;
@@ -9,7 +9,7 @@ export interface Transactions {
 }
 
 export interface TransactionState {
-  transactions: Transactions[];
+  transactions: Transaction[];
 }
 
 const initialState: TransactionState = {
@@ -20,7 +20,7 @@ export const transactionSlice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
-    addTransaction: (state, action: PayloadAction<Transactions>) => {
+    addTransaction: (state, action: PayloadAction<Transaction>) => {
       state.transactions.push(action.payload);
     },
     addTransactions: (state, action) => {

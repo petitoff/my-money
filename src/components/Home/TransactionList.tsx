@@ -5,8 +5,6 @@ interface Props {
 }
 
 const TransactionList = ({ transactions }: Props) => {
-  console.log(transactions, "here");
-
   return (
     <ul className="transactions">
       {transactions.map((transaction) => (
