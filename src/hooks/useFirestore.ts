@@ -1,4 +1,4 @@
-import { useAppDispatch } from "./hooks";
+import { useAppDispatch, useAppSelector } from "./hooks";
 import { projectFirestore, timestamp } from "../firebase/config";
 import {
   addFirestoreData,
@@ -7,14 +7,16 @@ import {
 } from "../redux/userSlice";
 import firebase from "firebase/app";
 
-interface DocProps {
+export interface DocProps {
   id?: string;
   userId?: string;
-  name: string;
-  amount: number;
+  name?: string;
+  amount?: number;
 }
 
 export const useFirestore = () => {
+  const user = useAppSelector((state) => state.user.user);
+
   const dispatch = useAppDispatch();
   const collection = "transactions";
 
@@ -23,10 +25,14 @@ export const useFirestore = () => {
 
     doc.id = projectFirestore.collection(collection).doc().id;
 
-    // get user id
-    const user = firebase.auth().currentUser;
-    if (user) {
-      doc.userId = user.uid;
+    // // get user id
+    // const user = firebase.auth().currentUser;
+    // if (user) {
+    //   doc.userId = user.uid;
+    // }
+
+    if (user.firebaseData) {
+      doc.userId = user.firebaseData.uid;
     }
 
     await projectFirestore.collection(collection).add({ ...doc, createdAt });
@@ -47,5 +53,20 @@ export const useFirestore = () => {
     dispatch(updateFirestoreData(doc));
   };
 
-  return { addDoc, deleteDoc, updateDoc };
+  const getTransactions = async () => {
+    if (!user.firebaseData) return;
+    const userId = user.firebaseData.uid;
+
+    const snapshot = await projectFirestore.collection(collection).get();
+
+    const transactions: DocProps[] = snapshot.docs
+      .filter((doc) => doc.data().userId === userId)
+      .map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      });
+
+    return transactions;
+  };
+
+  return { addDoc, deleteDoc, updateDoc, getTransactions };
 };
