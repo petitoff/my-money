@@ -2,6 +2,7 @@ import { useState } from "react";
 import { projectAuth } from "../firebase/config";
 import { useAppDispatch } from "./hooks";
 import { logoutUser } from "../redux/userSlice";
+import { clearTransactions } from "../redux/transactionSlice";
 
 export const useLogout = () => {
   const [error, setError] = useState<string | null>(null);
@@ -15,6 +16,7 @@ export const useLogout = () => {
     try {
       await projectAuth.signOut();
       dispatch(logoutUser());
+      dispatch(clearTransactions());
       setLoading(false);
     } catch (err: any) {
       setError(err.message);

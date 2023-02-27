@@ -27,6 +27,8 @@ export const userSlice = createSlice({
         isLoggedIn: true,
         firebaseData: action.payload,
       };
+
+      saveToLocalStorage(state);
     },
     logoutUser: (state) => {
       state.user = {

@@ -31,9 +31,16 @@ export const transactionSlice = createSlice({
         (transaction) => transaction.id !== action.payload
       );
     },
+    clearTransactions: (state) => {
+      state.transactions = [];
+    },
   },
 });
 
-export const { addTransaction, addTransactions, deleteTransaction } =
-  transactionSlice.actions;
+export const {
+  addTransaction,
+  addTransactions,
+  deleteTransaction,
+  clearTransactions,
+} = transactionSlice.actions;
 export default transactionSlice.reducer;
