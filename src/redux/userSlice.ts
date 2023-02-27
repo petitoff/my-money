@@ -9,7 +9,6 @@ export interface UserState {
   user: {
     isLoggedIn: boolean;
     firebaseData?: firebase.User | null;
-    firestoreData?: firebase.firestore.DocumentData[] | null;
   };
 }
 
@@ -45,45 +44,8 @@ export const userSlice = createSlice({
 
       saveToLocalStorage(state);
     },
-    addFirestoreData: (
-      state,
-      action: PayloadAction<firebase.firestore.DocumentData>
-    ) => {
-      state.user.firestoreData?.push(action.payload);
-    },
-    deleteFirestoreData: (
-      state,
-      action: PayloadAction<firebase.firestore.DocumentData>
-    ) => {
-      // find the index of the item to update
-      const index = state.user.firestoreData?.findIndex(
-        (item) => item.id === action.payload.id
-      );
-
-      // update the item
-      state.user.firestoreData?.splice(index!, 1);
-    },
-    updateFirestoreData: (
-      state,
-      action: PayloadAction<firebase.firestore.DocumentData>
-    ) => {
-      // find the index of the item to update
-      const index = state.user.firestoreData?.findIndex(
-        (item) => item.id === action.payload.id
-      );
-
-      // update the item
-      state.user.firestoreData?.splice(index!, 1, action.payload);
-    },
   },
 });
 
-export const {
-  signupUser,
-  logoutUser,
-  loginUser,
-  addFirestoreData,
-  updateFirestoreData,
-  deleteFirestoreData,
-} = userSlice.actions;
+export const { signupUser, logoutUser, loginUser } = userSlice.actions;
 export default userSlice.reducer;

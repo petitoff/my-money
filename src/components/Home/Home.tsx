@@ -1,23 +1,25 @@
 import TransactionForm from "./TransactionForm";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppSelector, useAppDispatch } from "../../hooks/hooks";
 import { useFirestore } from "../../hooks/useFirestore";
 import TransactionList from "./TransactionList";
-import { DocProps } from "../../hooks/useFirestore";
 
 import "./Home.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { addTransactions } from "../../redux/transactionSlice";
 
 const Home = () => {
-  const [docs, setDocs] = useState<DocProps[]>([]);
-  const transactions = useAppSelector((state) => state.user.user.firestoreData);
+  const transactions = useAppSelector(
+    (state) => state.transaction.transactions
+  );
 
   const { getTransactions } = useFirestore();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getTransactionsLocal = async () => {
       const temp = await getTransactions();
       if (temp) {
-        setDocs(temp);
+        dispatch(addTransactions(temp));
       }
     };
 
@@ -27,7 +29,7 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content">
-        {docs && <TransactionList transactions={docs} />}
+        {transactions && <TransactionList transactions={transactions} />}
       </div>
       <div className="sidebar">
         <TransactionForm />
