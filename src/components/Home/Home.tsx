@@ -24,6 +24,7 @@ const Home = () => {
       return;
     }
 
+    console.log(id);
     deleteDoc(id);
     dispatch(deleteTransaction(id));
   };

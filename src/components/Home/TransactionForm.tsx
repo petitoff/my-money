@@ -21,8 +21,8 @@ const TransactionForm = () => {
     setName("");
     setAmount("");
 
-    await addDoc(transaction);
-    dipatch(addTransaction(transaction));
+    const id: string = await addDoc(transaction);
+    dipatch(addTransaction({ ...transaction, id }));
   };
 
   return (

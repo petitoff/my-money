@@ -17,13 +17,17 @@ export const useFirestore = () => {
   const addDoc = async (doc: DocProps) => {
     const createdAt = timestamp.fromDate(new Date());
 
-    doc.id = projectFirestore.collection(collection).doc().id;
+    // doc.id = projectFirestore.collection(collection).doc().id;
 
     if (user.firebaseData) {
       doc.userId = user.firebaseData.uid;
     }
 
-    await projectFirestore.collection(collection).add({ ...doc, createdAt });
+    const temp = await projectFirestore
+      .collection(collection)
+      .add({ ...doc, createdAt });
+
+    return temp.id;
   };
 
   const deleteDoc = (id: string) => {
