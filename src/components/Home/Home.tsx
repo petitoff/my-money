@@ -4,7 +4,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 import TransactionList from "./TransactionList";
 
 import "./Home.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   addTransactions,
   deleteTransaction,
@@ -14,6 +14,7 @@ const Home = () => {
   const transactions = useAppSelector(
     (state) => state.transaction.transactions
   );
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { getTransactions, deleteDoc } = useFirestore();
   const dispatch = useAppDispatch();
@@ -29,10 +30,13 @@ const Home = () => {
 
   useEffect(() => {
     const getTransactionsLocal = async () => {
+      setLoading(true);
       const temp = await getTransactions();
       if (temp) {
         dispatch(addTransactions(temp));
       }
+
+      setLoading(false);
     };
 
     getTransactionsLocal();
@@ -41,6 +45,7 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content">
+        {loading && <p>Loading...</p>}
         {transactions && (
           <TransactionList
             transactions={transactions}

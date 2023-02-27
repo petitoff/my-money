@@ -103,3 +103,19 @@
   font-size: 0.9em;
   cursor: pointer;
 }
+
+/* if is in mobile phone */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  /* put .sidebar top and .content bottom */
+  .content {
+    order: 2;
+  }
+  .sidebar {
+    order: 1;
+    margin-right: 1.8rem;
+  }
+}
