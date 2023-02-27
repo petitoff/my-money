@@ -5,15 +5,27 @@ import TransactionList from "./TransactionList";
 
 import "./Home.css";
 import { useEffect } from "react";
-import { addTransactions } from "../../redux/transactionSlice";
+import {
+  addTransactions,
+  deleteTransaction,
+} from "../../redux/transactionSlice";
 
 const Home = () => {
   const transactions = useAppSelector(
     (state) => state.transaction.transactions
   );
 
-  const { getTransactions } = useFirestore();
+  const { getTransactions, deleteDoc } = useFirestore();
   const dispatch = useAppDispatch();
+
+  const handleDeleteTransaction = (id?: string) => {
+    if (!id) {
+      return;
+    }
+
+    deleteDoc(id);
+    dispatch(deleteTransaction(id));
+  };
 
   useEffect(() => {
     const getTransactionsLocal = async () => {
@@ -29,7 +41,12 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content">
-        {transactions && <TransactionList transactions={transactions} />}
+        {transactions && (
+          <TransactionList
+            transactions={transactions}
+            useDeleteTransaction={handleDeleteTransaction}
+          />
+        )}
       </div>
       <div className="sidebar">
         <TransactionForm />

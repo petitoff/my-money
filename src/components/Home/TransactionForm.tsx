@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
+import { useAppDispatch } from "../../hooks/hooks";
+import { addTransaction } from "../../redux/transactionSlice";
 
 const TransactionForm = () => {
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+
   const { addDoc } = useFirestore();
+  const dipatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,6 +22,7 @@ const TransactionForm = () => {
     setAmount("");
 
     await addDoc(transaction);
+    dipatch(addTransaction(transaction));
   };
 
   return (

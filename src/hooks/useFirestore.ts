@@ -1,8 +1,6 @@
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppSelector } from "./hooks";
 import { projectFirestore, timestamp } from "../firebase/config";
-import firebase from "firebase/app";
 import { Transaction } from "../redux/transactionSlice";
-import { addTransaction } from "../redux/transactionSlice";
 
 export interface DocProps {
   id?: string;
@@ -14,7 +12,6 @@ export interface DocProps {
 export const useFirestore = () => {
   const user = useAppSelector((state) => state.user.user);
 
-  const dispatch = useAppDispatch();
   const collection = "transactions";
 
   const addDoc = async (doc: DocProps) => {
@@ -27,19 +24,10 @@ export const useFirestore = () => {
     }
 
     await projectFirestore.collection(collection).add({ ...doc, createdAt });
-    dispatch(addTransaction({ ...doc, createdAt }));
   };
 
-  const deleteDoc = (doc: firebase.firestore.DocumentData) => {
-    const id: string = doc.id;
-
+  const deleteDoc = (id: string) => {
     projectFirestore.collection(collection).doc(id).delete();
-  };
-
-  const updateDoc = (doc: firebase.firestore.DocumentData) => {
-    const id: string = doc.id;
-
-    projectFirestore.collection(collection).doc(id).update(doc);
   };
 
   const getTransactions = async () => {
@@ -59,5 +47,5 @@ export const useFirestore = () => {
     return transactions;
   };
 
-  return { addDoc, deleteDoc, updateDoc, getTransactions };
+  return { addDoc, deleteDoc, getTransactions };
 };
