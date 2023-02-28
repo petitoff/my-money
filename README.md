@@ -11,6 +11,8 @@ Project in ReactJs with TypeScript. I used redux toolkit and firebase as auth an
 - Redux Toolkit
 - Firebase
 
+> The application has been secured with firestore rules
+
 ## Run
 If you want to start the server and open on `http://localhost:3000/login`
 ```
