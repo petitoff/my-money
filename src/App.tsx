@@ -19,6 +19,7 @@ function App() {
       dispatch(loginUser(localFirebaseData));
     }
   }, [user.isLoggedIn]);
+
   return (
     <div className="App">
       <BrowserRouter>
