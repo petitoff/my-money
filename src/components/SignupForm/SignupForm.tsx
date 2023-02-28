@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSignup } from "../../hooks/useSignup";
+import { setTitleTab } from "../../redux/appSlice";
+import { useAppDispatch } from "../../hooks/hooks";
+
 import "./SignupForm.css";
 
 const SignupForm = () => {
@@ -8,11 +11,18 @@ const SignupForm = () => {
   const [displayName, setDisplayName] = useState<string>("");
 
   const { signup, loading, error } = useSignup();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     signup(displayName, email, password);
   };
+
+  useEffect(() => {
+    dispatch(setTitleTab("Signup"));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="signup-form">

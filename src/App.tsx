@@ -7,9 +7,11 @@ import { loadFromLocalStorage } from "./hooks/useSaveAndLoadLocalStorage";
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks/hooks";
 import { loginUser } from "./redux/userSlice";
+import { Helmet } from "react-helmet";
 
 function App() {
   const user = useAppSelector((state) => state.user.user);
+  const titleTab = useAppSelector((state) => state.app.titleTab);
 
   const dispatch = useAppDispatch();
 
@@ -22,6 +24,10 @@ function App() {
 
   return (
     <div className="App">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{titleTab}</title>
+      </Helmet>
       <BrowserRouter>
         <Navbar />
 

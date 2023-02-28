@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
 import TransactionForm from "./TransactionForm";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks";
 import { useFirestore } from "../../hooks/useFirestore";
 import TransactionList from "./TransactionList";
-
-import "./Home.css";
-import { useEffect, useState } from "react";
 import {
   addTransactions,
   deleteTransaction,
 } from "../../redux/transactionSlice";
+import { setTitleTab } from "../../redux/appSlice";
+
+import "./Home.css";
 
 const Home = () => {
   const transactions = useAppSelector(
@@ -41,10 +42,19 @@ const Home = () => {
     };
 
     getTransactionsLocal();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    dispatch(setTitleTab("Home"));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="container">
+      <title>test</title>
       <div className="content">
         {loading && <p>Loading...</p>}
         {transactions && (

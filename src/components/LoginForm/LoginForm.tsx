@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLogin } from "../../hooks/useLogin";
+import { useAppDispatch } from "../../hooks/hooks";
+import { setTitleTab } from "../../redux/appSlice";
 
 import "./LoginForm.css";
 
@@ -9,6 +11,7 @@ const LoginForm = () => {
   const [error, setError] = useState<boolean>(false);
 
   const { login } = useLogin();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +20,12 @@ const LoginForm = () => {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    dispatch(setTitleTab("Login"));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <form
