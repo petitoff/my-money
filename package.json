@@ -15,6 +15,7 @@
     "@types/react-router": "^5.1.20",
     "dotenv": "^16.0.3",
     "firebase": "8.5",
+    "firebase-tools": "^11.24.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

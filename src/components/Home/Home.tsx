@@ -17,7 +17,7 @@ const Home = () => {
   );
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { getTransactions, deleteDoc } = useFirestore();
+  const { error, getTransactions, deleteDoc } = useFirestore();
   const dispatch = useAppDispatch();
 
   const handleDeleteTransaction = (id?: string) => {
@@ -52,11 +52,13 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(error);
   return (
     <div className="container">
       <title>test</title>
       <div className="content">
         {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
         {transactions && (
           <TransactionList
             transactions={transactions}
