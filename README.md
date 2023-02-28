@@ -10,3 +10,9 @@ Project in ReactJs with TypeScript. I used redux toolkit and firebase as auth an
 - TypeScript
 - Redux Toolkit
 - Firebase
+
+## Run
+If you want to start the server and open on `http://localhost:3000/login`
+```
+yarn dev
+```
