@@ -1,7 +1,7 @@
 # my-money
 Project in ReactJs with TypeScript. I used redux toolkit and firebase as auth and database.
 
-# Live [here]("homepage": "http://petitoff.github.io/my-money/login",)
+# Live [here](http://petitoff.github.io/my-money)
 
 ![](https://github.com/petitoff/my-money/blob/master/docs/home-page.png)
 
