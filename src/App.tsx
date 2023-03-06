@@ -20,6 +20,8 @@ function App() {
     if (localFirebaseData && !user.isLoggedIn) {
       dispatch(loginUser(localFirebaseData));
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.isLoggedIn]);
 
   return (
