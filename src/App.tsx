@@ -3,7 +3,7 @@ import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SignupPage";
 import Navbar from "./components/Navbar/Navbar";
-import { loadFromLocalStorage } from "./hooks/useSaveAndLoadLocalStorage";
+import { loadFromLocalStorage } from "./utils/localStorageUtils";
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks/hooks";
 import { loginUser } from "./redux/userSlice";

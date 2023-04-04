@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import {
   saveToLocalStorage,
   clearLocalStorage,
-} from "../hooks/useSaveAndLoadLocalStorage";
+} from "../utils/localStorageUtils";
 
 export interface UserState {
   user: {
